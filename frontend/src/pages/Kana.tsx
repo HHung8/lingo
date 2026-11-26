@@ -164,23 +164,6 @@ export default function Kana() {
         title={script === "hiragana" ? "Bảng chữ Hiragana" : "Bảng chữ Katakana"}
         sub="Chọn một chữ để xem cách đọc. Học theo từng hàng từ trái sang phải."
       />
-      <div className="mb-5 flex gap-2 rounded-xl bg-[var(--line)] p-1" role="group" aria-label="Chọn bảng chữ">
-        {(["hiragana", "katakana"] as const).map((item) => (
-          <Link
-            key={item}
-            to={`/ja/kana/${item}`}
-            aria-current={script === item ? "page" : undefined}
-            className={`flex min-h-11 flex-1 items-center justify-center rounded-lg px-3 text-sm font-bold no-underline transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--acc)] ${
-              script === item
-                ? "bg-[var(--card)] text-[var(--ink)]"
-                : "text-[var(--mut)] hover:text-[var(--ink)]"
-            }`}
-          >
-            {item === "hiragana" ? "あ Hiragana" : "ア Katakana"}
-          </Link>
-        ))}
-      </div>
-
       <section className="mb-6 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 sm:p-5">
         <h2 className="mb-4 text-lg font-bold">46 chữ cơ bản</h2>
         <KanaGrid rows={BASIC_ROWS} script={script} selected={selected} onSelect={selectKana} />
