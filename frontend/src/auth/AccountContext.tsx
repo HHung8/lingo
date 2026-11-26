@@ -4,7 +4,11 @@ import type { Lang } from "../types";
 const ACCOUNTS_KEY = "lingo.accounts.v1";
 const SESSION_KEY = "lingo.session.v1";
 const AUTH_SESSION_KEY = "lingo.auth.session.v1";
-const API_BASE_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "http://localhost:8080";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL?.trim() || (import.meta.env.DEV ? "http://localhost:8080" : "")
+).replace(/\/+$/, "");
+const IS_LOOPBACK_API_URL = /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3}|\[::1\])(?::\d+)?(?:\/|$)/i
+  .test(API_BASE_URL);
 
 interface LanguageProgress {
   quizzes: number;
@@ -59,6 +63,13 @@ function toAccount(user: StoredAccount): Account {
 }
 
 async function apiRequest<T>(path: string, body: object): Promise<T> {
+  if (!API_BASE_URL) {
+    throw new Error("API chưa được cấu hình. Hãy đặt biến VITE_API_URL trong Environment Variables của Vercel rồi deploy lại.");
+  }
+  if (!import.meta.env.DEV && IS_LOOPBACK_API_URL) {
+    throw new Error("VITE_API_URL đang trỏ tới localhost. Hãy đặt URL công khai của backend Render (không phải host database) trong Vercel rồi deploy lại.");
+  }
+
   let response: Response;
   try {
     response = await fetch(`${API_BASE_URL}${path}`, {
@@ -67,7 +78,7 @@ async function apiRequest<T>(path: string, body: object): Promise<T> {
       body: JSON.stringify(body),
     });
   } catch {
-    throw new Error("Không thể kết nối máy chủ. Hãy kiểm tra API tại localhost:8080.");
+    throw new Error(`Không thể kết nối máy chủ API tại ${API_BASE_URL}. Hãy kiểm tra địa chỉ API và trạng thái máy chủ.`);
   }
 
   const data = await response.json().catch(() => null) as (T & { message?: string; error?: string }) | null;

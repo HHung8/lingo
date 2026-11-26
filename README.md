@@ -4,8 +4,8 @@ Web học ngoại ngữ: tiếng Nhật và tiếng Anh (dễ mở rộng thêm 
 
 ```
 lingo-app/
-  frontend/   Vite + React + TypeScript (đã có)
-  backend/    API (làm sau)
+  frontend/   Vite + React + TypeScript
+  backend/    Spring Boot API
 ```
 
 ## Chạy frontend
@@ -38,8 +38,21 @@ khi chưa có backend, không phải hệ thống xác thực production.
 ## Deploy lên Vercel
 
 Import repo vào Vercel, đặt **Root Directory = `frontend`**. Vercel tự nhận Vite
-(Build: `npm run build`, Output: `dist`). `vercel.json` đã có rewrite cho React Router.
+(Build: `npm run build`, Output: `dist`). `frontend/vercel.json` đã có rewrite cho React Router.
 
 ## Nối với backend
 
-Đặt `VITE_API_URL` (xem `frontend/.env.example`). Để trống thì frontend dùng dữ liệu mẫu.
+Frontend trên Vercel không thể gọi `localhost` trên máy bạn hoặc truy cập PostgreSQL trực tiếp.
+Hãy deploy `backend/` lên Render dưới dạng **Web Service** (Dockerfile), rồi cấu hình:
+
+- Trên Render Web Service: `DB_URL=jdbc:postgresql://<internal-db-host>:5432/<database>`,
+  `DB_USER`, `DB_PASSWORD`, `JWT_SECRET` (ít nhất 32 ký tự), và
+  `CORS_ORIGINS` là danh sách domain Vercel, phân tách bằng dấu phẩy, ví dụ
+  `https://lingoo-ten.vercel.app,https://lingoo-git-main-hungs-projects-948ca928.vercel.app,https://lingoo-19uqlz1n9-hungs-projects-948ca928.vercel.app`.
+  Dùng internal host của PostgreSQL Render
+  cho backend đang chạy trên Render; không đưa thông tin database vào frontend/Vercel.
+- Trên Vercel: đặt `VITE_API_URL=https://<your-render-service>.onrender.com` (URL Web Service,
+  không phải URL database, không thêm `/api`) rồi redeploy để biến môi trường được build vào frontend.
+
+Để chạy local, có thể bỏ trống `VITE_API_URL`: đăng nhập sẽ dùng `http://localhost:8080`
+trong development; API nội dung sẽ dùng dữ liệu mẫu.
