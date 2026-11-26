@@ -5,6 +5,7 @@ import Path from "./pages/Path";
 import Cards from "./pages/Cards";
 import Quiz from "./pages/Quiz";
 import AccountPage from "./pages/Account";
+import Kana from "./pages/Kana";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/:lang" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="path" element={<Path />} />
+        <Route path="kana/:script" element={<Kana />} />
         <Route path="cards" element={<Cards />} />
         <Route path="quiz" element={<Quiz />} />
         <Route path="account" element={<AccountPage />} />
