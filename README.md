@@ -48,7 +48,7 @@ Hãy deploy `backend/` lên Render dưới dạng **Web Service** (Dockerfile), 
 - Trên Render Web Service: `DB_URL=jdbc:postgresql://<internal-db-host>:5432/<database>`,
   `DB_USER`, `DB_PASSWORD`, `JWT_SECRET` (ít nhất 32 ký tự), và
   `CORS_ORIGINS` là danh sách domain Vercel, phân tách bằng dấu phẩy, ví dụ
-  `https://lingoo-ten.vercel.app,https://lingoo-git-main-hungs-projects-948ca928.vercel.app,https://lingoo-19uqlz1n9-hungs-projects-948ca928.vercel.app`.
+  `https://lingoo-ten.vercel.app,https://lingoo-git-main-hungs-projects-948ca928.vercel.app,https://lingoo-bhx98l7g1-hungs-projects-948ca928.vercel.app`.
   Dùng internal host của PostgreSQL Render
   cho backend đang chạy trên Render; không đưa thông tin database vào frontend/Vercel.
 - Trên Vercel: đặt `VITE_API_URL=https://<your-render-service>.onrender.com` (URL Web Service,
