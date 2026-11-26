@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F4F5F7;
+  --card: #fff;
+  --ink: #17213F;
+  --mut: #555C73;
+  --line: #DDE0E8;
+  --acc: #C6322A;
+  --ok: #2E7D5B;
+  --okbg: #E7F3EC;
+  --bad: #B3261E;
+  --badbg: #FBEAE8;
+  --onacc: #fff;
+  --font-body: "Be Vietnam Pro", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10162B;
+    --card: #19213C;
+    --ink: #EEF0F7;
+    --mut: #A9AFC4;
+    --line: #2D3757;
+    --acc: #FF6A5E;
+    --ok: #5CC796;
+    --okbg: #17302A;
+    --bad: #FF8F86;
+    --badbg: #3A1F25;
+    --onacc: #10162B;
+  }
+}
+
+[data-lang="ja"] {
+  --disp: "Shippori Mincho", "Noto Serif JP", serif;
+}
+
+[data-lang="en"] {
+  --disp: "Source Serif 4", Georgia, serif;
+  --acc: #1F5FBF;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-lang="en"] {
+    --acc: #7FB0FF;
+  }
+}

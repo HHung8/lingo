@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/lingo}
+    username: ${DB_USER:lingo}
+    password: ${DB_PASSWORD:lingo}
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    # Bắt buộc >= 32 ký tự. Đặt biến môi trường JWT_SECRET khi chạy thật.
+    secret: ${JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+    expiration-minutes: 1440
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
